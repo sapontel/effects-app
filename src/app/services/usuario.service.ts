@@ -12,6 +12,10 @@ interface DataUsers {
   data: Usuario[];
 }
 
+interface DataUser {
+  data: Usuario;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,4 +30,16 @@ export class UsuarioService {
         map( (users: DataUsers) => users.data )
       );
   }
+
+  getUserById( id: string ): Observable<Usuario> {
+    return this.http.get<DataUser>(`${this.url}/users/${ id }`)
+      .pipe(
+        map( (users: DataUser) => {
+          console.log(users.data);
+          return users.data;
+        } )
+      );
+  }
+
+
 }
